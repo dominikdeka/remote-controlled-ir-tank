@@ -25,11 +25,11 @@ const int motorRightIn1 = 5;
 #define CE_PIN   9
 #define CSN_PIN 10
 
-const uint64_t pipe = 0xE8E8F0F0E1LL;
+const uint64_t pipe = 0xB00B1E5000LL;//0xE8E8F0F0E1LL;
 RF24 radio(CE_PIN, CSN_PIN); 
 
 int turning_strength = 130;
-int speed_pwm = 255;
+int speed_pwm = 145;
 int sensitivity = 10;
 
 int x_hiz=0;
@@ -60,7 +60,7 @@ void setup()
 //  Serial.begin(9600);                        
     
   radio.begin();
-  radio.setChannel(40);
+  radio.setChannel(20);
   radio.setDataRate(RF24_250KBPS);
   radio.openReadingPipe(1,pipe);
   radio.startListening();
@@ -104,24 +104,26 @@ void loop() {
     int button6 = data[7];
     int button7 = data[8];
 
-    drive(joystickX,joystickY);
-
-    if(!button3 && button2 && button4 && button5 && millis() - last_shot_time > shot_delay){
-      irsend.sendJVC(0xF503, 16, 0);
-      irrecv.enableIRIn();
-      last_shot_time = current_millis;
-    }
+    if(shot_counter <=5){
+      drive(joystickX,joystickY);
   
+      if(!button3 && button2 && button4 && button5 && millis() - last_shot_time > shot_delay){
+        irsend.sendJVC(0xF503, 16, 0);
+        irrecv.enableIRIn();
+        iShot();
+        last_shot_time = current_millis;
+      }
+    
+      if(!button2 && button4 && speed_pwm <= 245){
+        speed_pwm+=10; 
+      }
+    
+      if(button2 && !button4 && speed_pwm >= 145){
+        speed_pwm-=10;   
+      }
+    }
     if(!button5 && button2 && button3 && button4){
       shot_counter=0;
-    }
-  
-    if(!button2 && button4 && speed_pwm < 255){
-      speed_pwm+=10; 
-    }
-  
-    if(button2 && !button4 && speed_pwm > 140){
-      speed_pwm-=10;   
     }
 
   }
@@ -150,41 +152,69 @@ void drive(int x_axis, int y_axis) {
   int left_substract = x_hiz < -1 * sensitivity ? turning_strength : 0;
   
   int left_speed_pwm = y_hiz > sensitivity ? speed_pwm  - left_substract : (y_hiz < -1 * sensitivity ? 255 - speed_pwm + left_substract : 0);
-  int left_mode = y_hiz < -1 * sensitivity ? 255 : 0;
+  int left_mode = y_hiz < -1 * sensitivity ? 1 : 0;
   int right_speed_pwm = y_hiz > sensitivity ? speed_pwm - right_substract : (y_hiz < -1 * sensitivity ? 255 - speed_pwm + right_substract : 0);
-  int right_mode = y_hiz < -1 * sensitivity ? 255 : 0;
+  int right_mode = y_hiz < -1 * sensitivity ? 1 : 0;
+  
+//  int right_substract = x_hiz > sensitivity ? turning_strength : 0;
+//  int left_substract = x_hiz < -1 * sensitivity ? turning_strength : 0;
+//  
+//  int left_speed_pwm = y_hiz > sensitivity ? y_hiz  - min(y_hiz,left_substract) : (y_hiz < -1 * sensitivity ? 255 - abs(y_hiz) + min(abs(y_hiz),left_substract) : 0);
+//  int left_mode = y_hiz < -1 * sensitivity ? 1 : 0;
+//  int right_speed_pwm = y_hiz > sensitivity ? y_hiz - min(y_hiz,right_substract) : (y_hiz < -1 * sensitivity ? 255 - abs(y_hiz) + min(abs(y_hiz),right_substract) : 0);
+//  int right_mode = y_hiz < -1 * sensitivity ? 1 : 0;
   
   analogWrite(motorLeftIn1, left_speed_pwm);
-  analogWrite(motorLeftIn2, left_mode);
+  digitalWrite(motorLeftIn2, left_mode);
   analogWrite(motorRightIn1, right_speed_pwm);
-  analogWrite(motorRightIn2, right_mode);
+  digitalWrite(motorRightIn2, right_mode);
 }
 
 void iAmShot(){
-  analogWrite(motorLeftIn1, 255);
-  analogWrite(motorLeftIn2, 0);
-  analogWrite(motorRightIn1, 0);
-  analogWrite(motorRightIn2, 255);
-  delay(100);
-  analogWrite(motorLeftIn1, 0);
-  analogWrite(motorLeftIn2, 255);
-  analogWrite(motorRightIn1, 255);
-  analogWrite(motorRightIn2, 0);
-  delay(100);
-  analogWrite(motorLeftIn1, 255);
-  analogWrite(motorLeftIn2, 0);
-  analogWrite(motorRightIn1, 0);
-  analogWrite(motorRightIn2, 255);
-  delay(100);
-  analogWrite(motorLeftIn1, 0);
-  analogWrite(motorLeftIn2, 255);
-  analogWrite(motorRightIn1, 255);
-  analogWrite(motorRightIn2, 0);
-  delay(100);
-  analogWrite(motorLeftIn1, 0);
-  analogWrite(motorLeftIn2, 1);
-  analogWrite(motorRightIn1, 0);
-  analogWrite(motorRightIn2, 1);
+  for(int i = 0; i<=shot_counter; i++){
+    analogWrite(motorLeftIn1, 255);
+    analogWrite(motorLeftIn2, 0);
+    analogWrite(motorRightIn1, 0);
+    analogWrite(motorRightIn2, 255);
+    delay(50 + shot_counter * 10);
+    analogWrite(motorLeftIn1, 0);
+    analogWrite(motorLeftIn2, 255);
+    analogWrite(motorRightIn1, 255);
+    analogWrite(motorRightIn2, 0);
+    delay(50 + shot_counter * 10);
+    analogWrite(motorLeftIn1, 255);
+    analogWrite(motorLeftIn2, 0);
+    analogWrite(motorRightIn1, 0);
+    analogWrite(motorRightIn2, 255);
+    delay(50 + shot_counter * 10);
+    analogWrite(motorLeftIn1, 0);
+    analogWrite(motorLeftIn2, 255);
+    analogWrite(motorRightIn1, 255);
+    analogWrite(motorRightIn2, 0);
+    delay(50 + shot_counter * 10);
+    analogWrite(motorLeftIn1, 0);
+    analogWrite(motorLeftIn2, 1);
+    analogWrite(motorRightIn1, 0);
+    analogWrite(motorRightIn2, 1);
+  }
+}
+void iShot(){
+    analogWrite(motorLeftIn1, 0);
+    digitalWrite(motorLeftIn2, 1);
+    analogWrite(motorRightIn1, 0);
+    digitalWrite(motorRightIn2, 1);
+    delay(70);
 
+    analogWrite(motorLeftIn1, 255);
+    digitalWrite(motorLeftIn2, 0);
+    analogWrite(motorRightIn1, 255);
+    digitalWrite(motorRightIn2, 0);
+    delay(70);
+
+    analogWrite(motorLeftIn1, 0);
+    digitalWrite(motorLeftIn2, 0);
+    analogWrite(motorRightIn1, 0);
+    digitalWrite(motorRightIn2, 0);
+    delay(10);
 }
 
