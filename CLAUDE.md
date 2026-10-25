@@ -10,6 +10,7 @@ Arduino-based remote-controlled tank with an IR "gun" for a multi-player shootin
 - `arduino/remotePlusPad.ino` - handheld controller firmware (joystick + buttons, transmitter)
 - `eagle/ir_remote_controlled_veh.*` - vehicle board schematic/layout
 - `eagle/remote_controller.*` - controller board schematic/layout
+- `docs/hardware-upgrades.md` - optional part upgrades for a future PCB v2 (current hardware works)
 
 Eagle `.sch`/`.brd` are binary-ish XML edited in Autodesk Eagle; do not hand-edit them.
 
