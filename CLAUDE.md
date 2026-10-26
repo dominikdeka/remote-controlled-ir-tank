@@ -11,6 +11,7 @@ Arduino-based remote-controlled tank with an IR "gun" for a multi-player shootin
 - `eagle/ir_remote_controlled_veh.*` - vehicle board schematic/layout
 - `eagle/remote_controller.*` - controller board schematic/layout
 - `docs/hardware-upgrades.md` - optional part upgrades for a future PCB v2 (current hardware works)
+- `shield/` - 3D-printable bodies (OpenSCAD). Rules and commands in `shield/CLAUDE.md`
 
 Eagle `.sch`/`.brd` are binary-ish XML edited in Autodesk Eagle; do not hand-edit them.
 
