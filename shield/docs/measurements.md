@@ -23,7 +23,7 @@ Status: values tagged drawing, nominal or guess are **unverified** until a test 
 | Vehicle PCB outline | 98.73 x 99.56 | brd | ok |
 | Controller PCB outline | 100 x 55.87 | brd | ok |
 | Mounting holes, both boards | 2x 2.8 drill | brd | ok |
-| Standoff under PCB (leads + solder) | 2 | decided (vehicle PCB); controller PCB not checked | ok |
+| Standoff under PCB (leads + solder) | 2 | decided (vehicle PCB); used for the controller too | controller: check |
 
 ## Fasteners
 
@@ -138,7 +138,7 @@ TSOP38238 is an upgrade option only (see `../../docs/hardware-upgrades.md`). It 
 | Arcade button panel hole | 24 | nominal | unverified |
 | Arcade button bezel diameter | 30 | guess | measure |
 | Arcade button height above panel | 10 | guess | measure |
-| Arcade button depth behind panel (incl. micro switch) | 33 | guess | measure |
+| Arcade button depth from the panel front face (incl. micro switch) | 33 | guess (prototype block is 34 deep) | measure |
 | Arcade button nut outer diameter | 30 | guess | measure |
 
 ## Other parts
@@ -209,11 +209,11 @@ Measure these before the chassis design depends on them:
 - [ ] Caster: total height, mounting plate size and thickness.
 - [ ] Extra Nano VIN capacitors: values, size, height, position. They are not in Eagle; keep clearance around the Nano.
 - [ ] Heights above the PCB: NRF24L01+, Nano, 7-segment, buzzer, ICs, single 18650 holder, joystick module.
-- [ ] Standoff height under the controller PCB (2 like the vehicle?).
-- [ ] Arcade button: depth behind the panel, nut diameter, max panel thickness.
+- [ ] Standoff height under the controller PCB (2 assumed, like the vehicle).
+- [ ] Arcade button: depth from the panel front face (max 34), nut diameter (max 30.4), bezel diameter (max 31.6), panel thickness 3 OK.
 - [ ] Marker tube outer diameter on the prototype, if the test barrels should fit the wooden block (now `od = 14` in `test/barrel_set.scad`).
 - [ ] Wire lengths from the PCB to the gun block (TSOPs, IR LED) and to the controller buttons.
-- [ ] Screw lengths: M2.5 for PCB and motors (motor: 18.7 + wall + nut, about M2.5 x 25-30). PCB: M2.5 x 8 (PCB 1.6 + sleeve 2 + plate 3, nut in the plate). Gun block: M2.5 x 6-8 (foot 3 + plate 3, nut in the plate). Caster: short self-tapping screws that fit the 5 mm holes, shorter than spacer + plate (13.8).
+- [ ] Screw lengths: M2.5 for PCB and motors (motor: 18.7 + wall + nut, about M2.5 x 25-30). PCB: M2.5 x 8 (PCB 1.6 + sleeve 2 + plate 3, nut in the plate), both boards. Gun block: M2.5 x 6-8 (foot 3 + plate 3, nut in the plate). Caster: short self-tapping screws that fit the 5 mm holes, shorter than spacer + plate (13.8).
 
 ## Layout notes from the previews
 
@@ -231,3 +231,5 @@ These come from `vehicle/assembly_preview.scad` and `controller/assembly_preview
 - Caster (y 142) sits under the gun block. It is held by short self-tapping screws in holes drilled on assembly (decided), so the model has no holes or nut traps there. The spacer front face is raked 30 deg (leans back going down, as on the prototype); its top reaches y 164.2.
 - Vehicle: with `motor_top_gap` = 2, the top motor nut trap clears the plate (flat about 1.9 below it). With 0 it touched the plate.
 - Controller: case 100 x 90 (decided), so the button block is 34 deep, as on the prototype. It fits the guessed button depth (33).
+- Controller case (`controller/case.scad`): one piece, printed on the block front face, so the button holes are round and the standoffs are part of the plate. Block 35.6 high (z -11 to 24.6), buttons at x 20 and 80, z 6.8. The block is open at the rear and the plate stops at the PCB edge, except a 26 mm strip between the buttons. Under the plate the case is hollow but closed (2.4 walls), level with the block bottom, so it stands flat; the nuts go in through hex holes in the bottom. All outer edges are rounded 2.5; the front face edges end in a 45 deg flat on the bed.
+- Controller PCB support: 2 mm standoffs at H1, H2, and 2 mm rests at (4.5, 4.5), (89, 53.2) and under the joystick (33, 38.1). The top-right corner has Nano pins, so that rest sits further in. All rests clear the bottom pads by about 1.4 mm or more (checked against the .brd).

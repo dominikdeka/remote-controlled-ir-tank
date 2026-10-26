@@ -2,7 +2,7 @@
 
 3D-printable bodies for the IR tank and its controller, replacing the wooden prototypes (`docs/photos/prototype.jpg`). They fit the current PCBs and parts without changes.
 
-Status: the fit-test coupons and the vehicle parts (base plate, gun block, barrel, PCB standoffs) are ready to print. The controller case is not designed yet.
+Status: the fit-test coupons, the vehicle parts (base plate, gun block, barrel, PCB standoffs) and the controller case are ready to print.
 
 ## Contents
 
@@ -15,6 +15,7 @@ Status: the fit-test coupons and the vehicle parts (base plate, gun block, barre
 | `vehicle/base_plate.scad` | Base plate with the motor walls and the caster spacer |
 | `vehicle/pcb_standoff.scad` | PCB standoff sleeves and corner rests |
 | `vehicle/gun_block.scad` | Gun block with the wall, barrel bore, TSOP seat and wire channel |
+| `controller/case.scad` | Controller case: base plate with standoffs and the button block, one piece |
 | `vehicle/assembly_preview.scad`, `controller/assembly_preview.scad` | PCB + parts + layout placeholders, for checking, not printable |
 | `test/` | Fit-test coupons |
 | `docs/measurements.md` | Part sizes with source and status, open checklist |
@@ -60,6 +61,8 @@ Vehicle parts, all in print orientation, no supports:
 | `vehicle/pcb_standoff` | 3 sleeves and 3 rests (2 mm, one spare each); rests peg up |
 | `vehicle/gun_block` | On the wall rear face, no brim. Set `barrel_fit_cl` in `vehicle/gun_block.scad` from `test/barrel_fit` first |
 | `vehicle/barrel` | Muzzle down, with a brim |
+
+Controller case (`controller/case`): on the button block front face, no supports. Standoffs and rests are part of the case. Print `test/button_hole` first and set `btn_hole_cl` in `controller/case.scad`. Inside the block the plate edge bridges about 35 mm on each side of the middle strip. The front face edges end in a small 45 deg flat on the bed; all other outer edges are rounded (2.5 mm).
 
 ## Components
 
@@ -110,4 +113,4 @@ Upgrade options are listed in [`../docs/hardware-upgrades.md`](../docs/hardware-
 | Mounting holes | 2x 2.8 | Eagle `H1`, `H2` | M2.5 |
 | Cell | 1x 18650 | measure | No BMS |
 | Buttons A and B | 2x 24 mm arcade button with micro switch | measure | Front face, wired to the PCB |
-| Screws | M2.5 + nuts | measure | |
+| Screws | M2.5 x 8 + nuts (PCB) | measure | |

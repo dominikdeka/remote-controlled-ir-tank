@@ -44,7 +44,7 @@ Values tagged drawing, nominal or guess in `docs/measurements.md` are unverified
 - No supports: flat bottom face, overhangs at 45 deg or less, horizontal holes as `teardrop()`.
 - Min wall 1.6 (`wall_min`).
 - Holes and press fits: `clearance` (+0.2 on the diameter) until the test prints say otherwise.
-- PCB and gun block mounting: M2.5 screws from the top, nuts in hex traps (`nut_trap`) in the base plate bottom. PCB standoffs (sleeves at the holes, pegged rests at the other two corners) are separate parts, because the plate prints top face down. No heat-set inserts.
+- PCB and gun block mounting: M2.5 screws from the top, nuts in hex traps (`nut_trap`) in the base plate bottom. PCB standoffs (sleeves at the holes, pegged rests at the other two corners) are separate parts on the vehicle, because the plate prints top face down; on the controller they are part of the case. No heat-set inserts.
 - Caster: short self-tapping screws into holes drilled on assembly; no holes or nut traps in the model (it sits under the gun block).
 
 ## Barrel and gun block (top priority)
@@ -67,7 +67,7 @@ Photos and estimates: `docs/photos/`, "Prototype reference" in `docs/measurement
 - Caster spacer: front face raked, leaning back going down, as on the prototype.
 - Base plate: full width under the PCB, then a nose tapering to a narrow flat front.
 - TT motors: gearbox and shaft at the rear, motor can forward. Mount wall inboard of the motor, nuts on the inboard face, screws through the 2 holes near the motor end.
-- Controller: case 100 x 90, button block on the PCB +Y edge (34 deep), buttons on its front face.
+- Controller: case 100 x 90, one piece, printed on the button block front face. Button block on the PCB +Y edge (34 deep, open at the rear), buttons 60 apart on its front face. Block top 21 above the PCB top, case bottom 8 below the plate underside, as on the prototype. Held in the hand: closed underside (hollow, opens into the block), every outer edge rounded (`edge_r`).
 
 ## Commands
 
