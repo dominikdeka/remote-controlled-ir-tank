@@ -29,7 +29,7 @@ caster_h = 35;
 caster_wheel_d = 25;
 caster_hole_d = 5;
 caster_hole_spacing = [28, 23];
-caster_plate = [38, 32];
+caster_plate = [40, 34];
 caster_plate_t = 2;
 
 // Plate underside height; the caster must reach the same height. Recompute after

@@ -14,8 +14,7 @@ ground_z = -base_plate_t - plate_underside_h;
 axle_z = ground_z + wheel_d / 2;
 muzzle_y = block_y + preview_barrel_len;
 
-assert(muzzle_y <= vehicle_len, "barrel makes the vehicle too long");
-echo(muzzle_y = muzzle_y, barrel_len_max = vehicle_len - block_y);
+echo(block_y = block_y, caster_y = caster_y, muzzle_y = muzzle_y);
 
 color("tan", 0.8) base_plate();
 

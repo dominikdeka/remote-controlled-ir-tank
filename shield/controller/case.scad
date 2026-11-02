@@ -86,9 +86,9 @@ module controller_case() {
         }
         for (h = pcb_controller_holes) translate([h[1], h[2], 0]) {
             // Teardrop tip points -Y, which is up when printed on the block front face.
-            translate([0, 0, -base_plate_t]) rotate([90, 0, 0]) teardrop(m25_d, base_plate_t + pcb_standoff_h);
+            translate([0, 0, -base_plate_t]) rotate([90, 0, 0]) teardrop(m3_d, base_plate_t + pcb_standoff_h, m3_cl);
             // Open down through the case bottom, so the nut goes in from below.
-            translate([0, 0, block_z0]) nut_trap(m25_nut_af, -block_z0 - base_plate_t + m25_nut_h + clearance);
+            translate([0, 0, block_z0]) nut_trap(m3_nut_af, -block_z0 - base_plate_t + m3_nut_h + clearance, m3_nut_cl);
         }
         for (b = controller_case_buttons())
             translate(b - [0, btn_panel_t, 0]) rotate([-90, 0, 0]) hole(btn_hole_d, btn_panel_t, btn_hole_cl);

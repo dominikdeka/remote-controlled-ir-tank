@@ -17,9 +17,15 @@ base_plate_t = 3;
 pcb_standoff_h = 2;
 
 // ISO 4032 nuts, nominal.
-m25_d = 2.5;
-m25_nut_af = 5.0;
-m25_nut_h = 2.0;
+m3_d = 3;
+m3_nut_af = 5.5;
+m3_nut_h = 2.4;
+// From test/m3_fit (screw hole column 3, nut trap column 4).
+m3_cl = 0.3;
+m3_nut_cl = 0.4;
+// Plate left above a nut trapped in the base plate bottom, so the nut does not pull
+// through; the nut sticks out below the plate by the rest.
+nut_roof = 1;
 
 label_font = "Liberation Sans:style=Bold";
 

@@ -9,7 +9,8 @@ include <../lib/common.scad>
 include <../lib/parts.scad>
 use <barrel.scad>
 
-block_w = 30;
+// As wide as the caster spacer below the plate, so the two read as one nose.
+block_w = caster_plate.x;
 block_h = 40;
 // Flat top for the TSOP pair, from the wall rear face; the front face leans back by block_rake.
 block_top_len = 20;
@@ -18,7 +19,7 @@ block_rake = 30;
 wall_w = 100;
 wall_t = 4;
 wall_side_h = 15;
-// Foot on the plate for the M2.5 screws; nuts go under the base plate.
+// Foot on the plate for the M3 screws; nuts go under the base plate.
 flange_t = 3;
 flange_len = 12;
 flange_front_w = 84;
@@ -85,7 +86,7 @@ module gun_block() {
         translate([-tsop_wire_channel.x / 2, -eps, wire_z]) cube([tsop_wire_channel.x, tsop_y + eps, tsop_wire_channel.y]);
         // Teardrop tip points +Y, which is up when printed on the wall rear face.
         for (sx = [-1, 1], x = flange_hole_x)
-            translate([sx * x, flange_hole_y, flange_t]) rotate([-90, 0, 0]) teardrop(m25_d, flange_t);
+            translate([sx * x, flange_hole_y, flange_t]) rotate([-90, 0, 0]) teardrop(m3_d, flange_t, m3_cl);
     }
 }
 

@@ -43,9 +43,9 @@ Values tagged drawing, nominal or guess in `docs/measurements.md` are unverified
 - Bambu Lab A1 mini: bed 180 x 180 x 180, 0.4 mm nozzle, PLA or PETG.
 - No supports: flat bottom face, overhangs at 45 deg or less, horizontal holes as `teardrop()`.
 - Min wall 1.6 (`wall_min`).
-- Holes and press fits: `clearance` (+0.2 on the diameter) until the test prints say otherwise.
-- PCB and gun block mounting: M2.5 screws from the top, nuts in hex traps (`nut_trap`) in the base plate bottom. PCB standoffs (sleeves at the holes, pegged rests at the other two corners) are separate parts on the vehicle, because the plate prints top face down; on the controller they are part of the case. No heat-set inserts.
-- Caster: short self-tapping screws into holes drilled on assembly; no holes or nut traps in the model (it sits under the gun block).
+- Holes and press fits: `clearance` (+0.2 on the diameter) until the test prints say otherwise. M3 holes and nut traps use `m3_cl` (0.3) and `m3_nut_cl` (0.4), from `test/m3_fit`.
+- Screws are M3 (the user's screws are labelled M3). PCB and gun block mounting: M3 screws from the top, nuts in hex traps (`nut_trap`) in the base plate bottom, with `nut_roof` of plate left above the nut. PCB standoffs (sleeves at the holes, pegged rests at the other two corners) are separate parts on the vehicle, because the plate prints top face down; on the controller they are part of the case. No heat-set inserts.
+- Caster: self-tapping screws from below into 2 mm pilot holes, 10 deep, in the spacer (the gun block covers the top). A thin ring slit around each hole makes the slicer print solid walls there.
 
 ## Barrel and gun block (top priority)
 
@@ -61,11 +61,12 @@ Values tagged drawing, nominal or guess in `docs/measurements.md` are unverified
 
 Photos and estimates: `docs/photos/`, "Prototype reference" in `docs/measurements.md`.
 
-- Vehicle: max 180 long from the plate rear edge to the muzzle tip. Plate level, barrel parallel to the floor (caster spacer from `caster_spacer_h`).
-- Gun block: front face leans back (raked, "aggressive" look). Keep it. 40 high, with a flat top long enough for the TSOP pair. Starts just in front of the NRF24.
+- Vehicle: plate max 180 long (the bed); the barrel sticks out in front and does not count. Plate level, barrel parallel to the floor (caster spacer from `caster_spacer_h`).
+- Gun block: front face leans back (raked, "aggressive" look). Keep it. 40 high, with a flat top long enough for the TSOP pair. As wide as the caster spacer.
+- Nose: the gun block on top and the caster spacer below both end at the plate front edge, so in side view they form a nose.
 - Wall: the rear part of the gun block, one piece with it, full plate width, sides sloping down (not a rectangle).
-- Caster spacer: front face raked, leaning back going down, as on the prototype.
-- Base plate: full width under the PCB, then a nose tapering to a narrow flat front.
+- Caster spacer: as long and as wide as the gun block base, front face raked, leaning back going down, as on the prototype.
+- Base plate: full width under the PCB, then a nose tapering to a flat front as wide as the gun block.
 - TT motors: gearbox and shaft at the rear, motor can forward. Mount wall inboard of the motor, nuts on the inboard face, screws through the 2 holes near the motor end.
 - Controller: case 100 x 90, one piece, printed on the button block front face. Button block on the PCB +Y edge (34 deep, open at the rear), buttons 60 apart on its front face. Block top 21 above the PCB top, case bottom 8 below the plate underside, as on the prototype. Held in the hand: closed underside (hollow, opens into the block), every outer edge rounded (`edge_r`).
 
@@ -78,7 +79,7 @@ openscad --version          # check it is installed; if missing, tell the user, 
 make                        # all STL + PNG into build/
 make stl                    # printable parts only
 make png                    # previews of everything
-make build/test/m25_fit.stl # one part
+make build/test/m3_fit.stl  # one part
 make build/vehicle/barrel.png
 make pcb                    # regenerate lib/pcb_*.scad after a .brd change
 make clean

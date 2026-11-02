@@ -22,15 +22,17 @@ Status: values tagged drawing, nominal or guess are **unverified** until a test 
 | Base plate thickness (prototype, start value) | 3 | measured | ok |
 | Vehicle PCB outline | 98.73 x 99.56 | brd | ok |
 | Controller PCB outline | 100 x 55.87 | brd | ok |
-| Mounting holes, both boards | 2x 2.8 drill | brd | ok |
+| Mounting holes, both boards | 2x 2.8 drill (M3 passes, checked) | brd | ok |
 | Standoff under PCB (leads + solder) | 2 | decided (vehicle PCB); used for the controller too | controller: check |
 
 ## Fasteners
 
 | Value | mm | Source | Status |
 |---|---|---|---|
-| M2.5 nut across flats / thickness | 5.0 / 2.0 | nominal (ISO 4032) | unverified |
-| Start clearance on hole diameters | +0.2 | decision | tune with `test/m25_fit` |
+| Screw size | M3 | user (label on the screws; a base plate printed for M2.5 was too tight for them) | ok |
+| M3 nut across flats / thickness | 5.5 / 2.4 | nominal (ISO 4032) | unverified |
+| Start clearance on hole diameters | +0.2 | decision | tune with the test coupons |
+| M3 screw hole / nut trap clearance | +0.3 / +0.4 | `test/m3_fit` print (columns 3 and 4) | ok |
 
 ## TT gear motor 48:1 and wheel
 
@@ -72,9 +74,9 @@ Shop: https://botland.com.pl/kola-z-oponami/7292-obrotowe-kolko-do-podwozia-robo
 |---|---|---|---|
 | Total height | 35 | nominal (shop) | unverified |
 | Wheel diameter | 25 | nominal (shop) | unverified |
-| Mounting holes | 4x 5 dia (short self-tapping screws into drilled holes) | nominal (shop) | unverified |
-| Hole spacing | 28 x 23 | nominal (shop) | unverified |
-| Mounting plate size | 38 x 32 | guess | measure |
+| Mounting holes | 4x 5 dia (self-tapping screws 10 long into 2 mm pilot holes, 10 deep) | nominal (shop); screws and pilot size: user | ok |
+| Hole spacing | 28 x 23 | `test/caster_holes` | ok |
+| Mounting plate size | 40 x 34 | `test/caster_holes` (the 38 x 32 coupon was too small) | ok |
 | Mounting plate thickness | 2 | guess | measure |
 
 ## Level base plate (derived)
@@ -213,22 +215,23 @@ Measure these before the chassis design depends on them:
 - [ ] Arcade button: depth from the panel front face (max 34), nut diameter (max 30.4), bezel diameter (max 31.6), panel thickness 3 OK.
 - [ ] Marker tube outer diameter on the prototype, if the test barrels should fit the wooden block (now `od = 14` in `test/barrel_set.scad`).
 - [ ] Wire lengths from the PCB to the gun block (TSOPs, IR LED) and to the controller buttons.
-- [ ] Screw lengths: M2.5 for PCB and motors (motor: 18.7 + wall + nut, about M2.5 x 25-30). PCB: M2.5 x 8 (PCB 1.6 + sleeve 2 + plate 3, nut in the plate), both boards. Gun block: M2.5 x 6-8 (foot 3 + plate 3, nut in the plate). Caster: short self-tapping screws that fit the 5 mm holes, shorter than spacer + plate (13.8).
+- [ ] Screw lengths: M3 for PCB and motors (motor: 18.7 + wall + nut, about M3 x 25-30). PCB: M3 x 8 (PCB 1.6 + sleeve 2 + plate 3, nut in the plate, 0.4 below it), both boards. Gun block: M3 x 8 (foot 3 + plate 3, nut in the plate). Caster: self-tapping screws 10 long (user), about 8 into the spacer behind a 2 mm caster plate (thickness is a guess); the pilot hole is 10 deep.
 
 ## Layout notes from the previews
 
 These come from `vehicle/assembly_preview.scad` and `controller/assembly_preview.scad`. They are inputs for the chassis design, not decisions.
 
-- Vehicle length: max 180 from the plate rear edge to the muzzle tip (decided). The plate is 170 long, so it prints on the 180 bed.
-- Vehicle: the NRF24L01+ footprint ends 19.3 mm past the PCB front edge (y 118.8, x 17-32, about 13 mm tall). The gun block starts 1.0 mm in front of it (y 119.8; decided: make the vehicle longer instead of cutting the wall). The footprint box is 29.3 long, the module 29 nominal.
-- Gun block (`vehicle/gun_block.scad`): 40 high, 30 wide, 20 long flat top for the TSOP pair, front face raked 30 deg, so 43.1 long at the base (y 119.8-162.9). Printed on the wall rear face, so the barrel bore is round and square to the wall.
-- Wall: the rear 4 mm of the gun block, full plate width (100), sides sloping from the block top down to 15 at the plate edges. Over the NRF24 it is 28-39 high (module top about 16.6).
-- Barrel: separate part, slid into the block; its rear end (LED, cap) is flush with the wall rear face (y 119.8), so the LED is reachable from behind. With 180 max, a barrel can be at most 60.2 long: the 50 and 60 mm test barrels fit (60: muzzle y 179.8, 25.6 past the block face at axis height). The 70 mm one does not.
+- Vehicle length: the plate is 170 long (max 180, the bed). The barrel sticks out in front of the plate and does not count (decided).
+- Nose: the gun block on top and the caster spacer below both end at the plate front edge (decided), so in side view they form a nose. The plate front is 40 wide, as both blocks.
+- Vehicle: the NRF24L01+ footprint ends 19.3 mm past the PCB front edge (y 118.8, x 17-32, about 13 mm tall). The gun block wall is 8.1 in front of it. The footprint box is 29.3 long, the module 29 nominal.
+- Gun block (`vehicle/gun_block.scad`): 40 high, 40 wide (as the caster spacer), 20 long flat top for the TSOP pair, front face raked 30 deg, so 43.1 long at the base (y 126.9-170). Printed on the wall rear face, so the barrel bore is round and square to the wall.
+- Wall: the rear 4 mm of the gun block, full plate width (100), sides sloping from the block top down to 15 at the plate edges.
+- Barrel: separate part, slid into the block; its rear end (LED, cap) is flush with the wall rear face (y 126.9), so the LED is reachable from behind. Test barrels 50 / 60 / 70 (decided): the 70 mm one ends at y 196.9, 35.6 past the block face at axis height.
 - TSOP legs: the pair sits 5 deep (bottom z 35) on two 2 mm ledges. Below is a cavity for the leg joints down to z 23.7 (1.6 above the barrel bore), so legs can be at most 11.3 long (decided: shorten them). The wires run in a 6 x 5 channel to the wall rear face, above the barrel.
-- Gun block mounting: 3 mm foot in front of the wall, 4x M2.5 (x +-25 and +-40, 8 in front of the wall rear face), nuts in traps in the base plate bottom. The foot tapers like the plate nose; the nose is 44 long (prototype about 48) so it starts in front of the wall.
-- Base plate (`vehicle/base_plate.scad`): one piece with both motor walls (as `test/tt_motor_mount`, 27.3 below the plate) and the caster spacer (10.8, raked front). Printed top face down. Motor wire slots 5 x 10 at y 104-114, in line with each motor, between the PCB front edge and the gun block. About 70 cm3 solid.
+- Gun block mounting: 3 mm foot in front of the wall, 4x M3 (x +-25 and +-40, 8 in front of the wall rear face), nuts in traps in the base plate bottom. The foot tapers like the plate nose; the nose is 39 long (prototype about 48) so it starts just behind the wall front face.
+- Base plate (`vehicle/base_plate.scad`): one piece with both motor walls (as `test/tt_motor_mount`, 27.3 below the plate) and the caster spacer (10.8, raked front). Printed top face down. Rear axle at y 18.4 (decided): the motor walls end at the plate rear edge, the wheels stick out 14.1 behind it. The PCB H2 nut trap is above the left motor (2 mm gap), so put that nut in before the motor. Motor wire slots 5 x 10 at y 104-114, in line with each motor, between the PCB front edge and the gun block. About 70 cm3 solid.
 - PCB: 2 mm sleeves at the two holes (H1, H2) and 2 mm rests at the two other corners (no solder joints there, checked on the PCB). The rests have a 3 mm peg in a blind hole in the plate.
-- Caster (y 142) sits under the gun block. It is held by short self-tapping screws in holes drilled on assembly (decided), so the model has no holes or nut traps there. The spacer front face is raked 30 deg (leans back going down, as on the prototype); its top reaches y 164.2.
+- Caster (y 146.8) sits under the gun block. It is held by 4 self-tapping screws from below in 2 mm pilot holes, 10 deep (decided). A 0.15 ring slit 1.6 out from each hole makes the slicer print walls around it instead of infill. The spacer front face is raked 30 deg (leans back going down, as on the prototype); its top reaches the plate front edge (y 170). It is as long as the gun block (from y 126.9), and the caster plate sits at its front end.
 - Vehicle: with `motor_top_gap` = 2, the top motor nut trap clears the plate (flat about 1.9 below it). With 0 it touched the plate.
 - Controller: case 100 x 90 (decided), so the button block is 34 deep, as on the prototype. It fits the guessed button depth (33).
 - Controller case (`controller/case.scad`): one piece, printed on the block front face, so the button holes are round and the standoffs are part of the plate. Block 35.6 high (z -11 to 24.6), buttons at x 20 and 80, z 6.8. The block is open at the rear and the plate stops at the PCB edge, except a 26 mm strip between the buttons. Under the plate the case is hollow but closed (2.4 walls), level with the block bottom, so it stands flat; the nuts go in through hex holes in the bottom. All outer edges are rounded 2.5; the front face edges end in a 45 deg flat on the bed.

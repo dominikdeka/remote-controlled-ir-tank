@@ -1,4 +1,4 @@
-// PCB standoffs between the base plate and the PCB: sleeves for the two M2.5 screws
+// PCB standoffs between the base plate and the PCB: sleeves for the two M3 screws
 // and rests with a locating peg for the two corners without holes. Printed separately
 // because the base plate prints top face down. One spare of each.
 
@@ -9,7 +9,7 @@ standoff_d = 7;
 module pcb_standoff() {
     difference() {
         cylinder(d = standoff_d, h = pcb_standoff_h);
-        hole(m25_d, pcb_standoff_h);
+        hole(m3_d, pcb_standoff_h, m3_cl);
     }
 }
 

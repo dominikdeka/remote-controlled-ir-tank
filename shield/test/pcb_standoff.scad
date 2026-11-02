@@ -1,4 +1,4 @@
-// PCB standoff on a piece of base plate. M2.5 screw from the top through the PCB,
+// PCB standoff on a piece of base plate. M3 screw from the top through the PCB,
 // nut trapped in the plate bottom. Checks the standoff height under the PCB leads.
 
 include <../lib/common.scad>
@@ -12,8 +12,8 @@ difference() {
         translate([plate.x / 2, plate.y / 2, 0]) cylinder(d = standoff_d, h = plate.z + pcb_standoff_h);
     }
     translate([plate.x / 2, plate.y / 2, 0]) {
-        hole(m25_d, plate.z + pcb_standoff_h);
-        nut_trap(m25_nut_af, m25_nut_h + clearance);
+        hole(m3_d, plate.z + pcb_standoff_h, m3_cl);
+        nut_trap(m3_nut_af, plate.z - nut_roof, m3_nut_cl);
     }
     translate([plate.x / 2, 4, plate.z]) label(str(pcb_standoff_h), size = 3.5);
 }

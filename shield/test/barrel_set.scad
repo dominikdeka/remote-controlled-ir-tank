@@ -3,7 +3,7 @@
 
 use <../vehicle/barrel.scad>
 
-lengths = [40, 50, 60];
+lengths = [50, 60, 70];
 od = 14;
 
 for (i = [0 : len(lengths) - 1]) translate([i * (od + 6), 0, 0]) {

@@ -3,7 +3,7 @@
 // Print orientation: plate on the bed, wall up. In use it is upside down: the wall hangs
 // under the plate and the motor top touches the plate underside (+ motor_top_gap).
 // As on the prototype, the wall is inboard of the motor: the motor sits on the +Y face
-// (outboard), M2.5 nuts go in traps on the -Y face (inboard).
+// (outboard), M3 nuts go in traps on the -Y face (inboard).
 // Hole, peg and shaft positions are from the drawing and unverified; this print checks them.
 
 include <../lib/common.scad>

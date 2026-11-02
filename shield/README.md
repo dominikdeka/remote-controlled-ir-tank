@@ -28,7 +28,7 @@ Needs OpenSCAD (tested with 2021.01) and Python 3 for `make pcb`.
 cd shield
 make            # STL + PNG into build/
 make stl
-make png
+make png        # also build/vehicle/assembly_preview_{side,front,top}.png
 make pcb        # after changing a .brd file
 make clean
 ```
@@ -41,23 +41,24 @@ Print the coupons first, in this order, and tune `clearance` in `lib/common.scad
 
 | Coupon | Checks |
 |---|---|
-| `test/m25_fit` | M2.5 hole and nut trap clearance (0.1 to 0.4, label = tenths) |
+| `test/m3_fit` | M3 hole and nut trap clearance (0.1 to 0.4, label = tenths); done: `m3_cl` 0.3, `m3_nut_cl` 0.4 |
 | `test/pcb_standoff` | Standoff height under the PCB, nut trap from below |
 | `test/led_seat` | LED seat clearance 0.1 / 0.2 / 0.3 (notches = tenths), rear cap |
 | `test/tsop_seat` | Seat for two TSOP1730 glued back to back, legs straight down (set `tsop = tsop38238` for the upgrade) |
 | `test/tt_motor_mount` | TT motor holes, shaft and peg positions from the drawing |
-| `test/caster_mount` | The computed spacer height (printed on top); drill the caster holes by hand |
+| `test/caster_mount` | The computed spacer height (printed on top) |
+| `test/caster_holes` | Caster hole pattern 28 x 23 on a 3 mm plate the size of the caster plate: lay the caster on it, pass M3 screws through both (done: holes match, plate is 40 x 34) |
 | `test/button_hole` | 24 mm button hole, 24.0 / 24.2 / 24.4 |
-| `test/barrel_set` | Barrels 40 / 50 / 60 mm, same bore and wall, for hit precision at distance |
+| `test/barrel_set` | Barrels 50 / 60 / 70 mm, same bore and wall, for hit precision at distance |
 | `test/barrel_fit` | Barrel fit in the gun block bore, clearance 0.1 / 0.2 / 0.3 (notches = tenths) |
 
-Barrels print muzzle down. Use a brim for the 50 and 60 mm ones.
+Barrels print muzzle down. Use a brim for all three.
 
 Vehicle parts, all in print orientation, no supports:
 
 | Part | Notes |
 |---|---|
-| `vehicle/base_plate` | Top face on the bed (the motor walls and the caster spacer grow up). Print `test/tt_motor_mount`, `test/m25_fit` and `test/caster_mount` first |
+| `vehicle/base_plate` | Top face on the bed (the motor walls and the caster spacer grow up). Print `test/tt_motor_mount`, `test/m3_fit` and `test/caster_mount` first |
 | `vehicle/pcb_standoff` | 3 sleeves and 3 rests (2 mm, one spare each); rests peg up |
 | `vehicle/gun_block` | On the wall rear face, no brim. Set `barrel_fit_cl` in `vehicle/gun_block.scad` from `test/barrel_fit` first |
 | `vehicle/barrel` | Muzzle down, with a brim |
@@ -87,14 +88,14 @@ Upgrade options are listed in [`../docs/hardware-upgrades.md`](../docs/hardware-
 | Power switch | SS12D00G4 | Eagle `S1` (footprint TL3XPO) | Must stay reachable |
 | IR LED connection | - | Eagle `IR` (LED5MM footprint) | Wire point only, LED sits in the barrel |
 | IR receiver connections | - | Eagle `TSOP1`, `TSOP2` | Wire points only, receivers sit on the gun block |
-| Mounting holes | 2x 2.8 | Eagle `H1`, `H2` | M2.5 |
+| Mounting holes | 2x 2.8 | Eagle `H1`, `H2` | M3 (checked: it passes) |
 | Cells | 2x 18650 | measure | No BMS |
 | Drive motors + wheels | 2x TT motor 5 V 48:1, wheel 65 x 26 | [Botland 3696](https://botland.com.pl/silniki-dc-katowe-z-przekladnia/3696-kolo-silnik-65x26mm-5v-z-przekladnia-48-1-5903351248129.html) | Mount through the side of the body |
 | Caster | Swivel caster, 25 mm wheel, 35 mm tall | [Botland 7292](https://botland.com.pl/kola-z-oponami/7292-obrotowe-kolko-do-podwozia-robota-5904422301194.html) | 4x 5 mm holes, 28 x 23 |
 | IR LED (gun) | Generic 5 mm, 940 nm, 60 mW | measure | In the barrel |
 | IR receivers | 2x TSOP1730 | Vishay datasheet 82030 | Glued back to back on top of the gun block, one forward, one backward |
 | Extra VIN capacitors | Ceramic + electrolytic | measure | Soldered to the Nano VIN, not in Eagle |
-| Screws | M2.5 + nuts (PCB, motors, gun block), short self-tapping screws in drilled holes (caster) | measure | Lengths in the measurements checklist |
+| Screws | M3 + nuts (PCB, motors, gun block), self-tapping screws 10 long (caster) | measure | Lengths in the measurements checklist |
 
 ### Controller
 
@@ -110,7 +111,7 @@ Upgrade options are listed in [`../docs/hardware-upgrades.md`](../docs/hardware-
 | Resistors | 10k (x2), 160 | Eagle `R1`, `R2`, `R6` | |
 | Pin header | 4-pin | Eagle `SV1` (MA04-1) | |
 | Power switch | SS12D00G4 | Eagle `S1` (footprint TL3XPO) | At the PCB edge, must stay reachable |
-| Mounting holes | 2x 2.8 | Eagle `H1`, `H2` | M2.5 |
+| Mounting holes | 2x 2.8 | Eagle `H1`, `H2` | M3 (checked: it passes) |
 | Cell | 1x 18650 | measure | No BMS |
 | Buttons A and B | 2x 24 mm arcade button with micro switch | measure | Front face, wired to the PCB |
-| Screws | M2.5 x 8 + nuts (PCB) | measure | |
+| Screws | M3 x 8 + nuts (PCB) | measure | |
